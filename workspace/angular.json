@@ -1,0 +1,183 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "stock-ticker-lib": {
+      "projectType": "library",
+      "root": "projects/stock-ticker-lib",
+      "sourceRoot": "projects/stock-ticker-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stock-ticker-lib/tsconfig.lib.json",
+            "project": "projects/stock-ticker-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/stock-ticker-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stock-ticker-lib/src/test.ts",
+            "tsConfig": "projects/stock-ticker-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/stock-ticker-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stock-ticker-lib/tsconfig.lib.json",
+              "projects/stock-ticker-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stock-ticker-app": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/stock-ticker-app",
+      "sourceRoot": "projects/stock-ticker-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "outputPath": "dist/stock-ticker-app",
+            "index": "projects/stock-ticker-app/src/index.html",
+            "main": "projects/stock-ticker-app/src/main.ts",
+            "polyfills": "projects/stock-ticker-app/src/polyfills.ts",
+            "tsConfig": "projects/stock-ticker-app/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/stock-ticker-app/src/favicon.ico",
+              "projects/stock-ticker-app/src/assets"
+            ],
+            "styles": [
+              "projects/stock-ticker-app/src/styles.css"
+            ],
+            "scripts": [
+              {
+                "bundleName": "polyfill-webcomp-es5",
+                "input": "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"
+              },
+              {
+                "bundleName": "polyfill-webcomp",
+                "input": "node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce-pf.js"
+              },
+              "node_modules/rxjs/bundles/rxjs.umd.js",
+              "node_modules/@angular/core/bundles/core.umd.js",
+              "node_modules/@angular/common/bundles/common.umd.js",
+              "node_modules/@angular/common/bundles/common-http.umd.js",
+              "node_modules/@angular/compiler/bundles/compiler.umd.js",
+              "node_modules/@angular/elements/bundles/elements.umd.js",
+              "node_modules/@angular/platform-browser/bundles/platform-browser.umd.js",
+              "node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
+              "./dist/stock-ticker-lib/bundles/stock-ticker-lib.umd.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/stock-ticker-app/src/environments/environment.ts",
+                  "with": "projects/stock-ticker-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "browserTarget": "stock-ticker-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "stock-ticker-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "stock-ticker-app:build"
+          }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "main": "projects/stock-ticker-app/src/test.ts",
+            "polyfills": "projects/stock-ticker-app/src/polyfills.ts",
+            "tsConfig": "projects/stock-ticker-app/tsconfig.spec.json",
+            "karmaConfig": "projects/stock-ticker-app/karma.conf.js",
+            "assets": [
+              "projects/stock-ticker-app/src/favicon.ico",
+              "projects/stock-ticker-app/src/assets"
+            ],
+            "styles": [
+              "projects/stock-ticker-app/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stock-ticker-app/tsconfig.app.json",
+              "projects/stock-ticker-app/tsconfig.spec.json",
+              "projects/stock-ticker-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/stock-ticker-app/e2e/protractor.conf.js",
+            "devServerTarget": "stock-ticker-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "stock-ticker-app:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "stock-ticker-lib"
+}
