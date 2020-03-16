@@ -1,8 +1,25 @@
-Create a new application to consume your custom element
-	1. create application (ng generate application training-app)
-	2. add elements to the project "ng add @angular/elements" (adds it to the application)
-	3. add "schemas: [CUSTOM_ELEMENTS_SCHEMA]" to app.module.ts in application
-	4. add polyfills (ng g ngx-build-plus:wc-polyfill --project {application-name}) (this must come before other other dependencies)
-	5. install ngx-build-plus (ng add ngx-build-plus --project {application-name})
-	6. add ng packages to scripts config in angular.json (ng g ngx-build-plus:externals --project {application-name})
-	7. build application 
+Setup Library Element
+	1. create library (ng generate library {library-name}
+	2. add a component to the library
+	3. update lib.module.ts to export as angular element
+		export class StockTickerLibModule implements DoBootstrap {
+		  constructor(private injector: Injector) {}
+		  ngDoBootstrap(appRef: ApplicationRef): void {
+			// Turn our component into an Angular Element (Web Component)
+			const stockTickerLibElement = createCustomElement(StockTickerLibComponent, {
+			  injector: this.injector,
+			});
+			customElements.define(
+			  'stock-ticker',
+			  stockTickerLibElement
+			);
+		  }
+		}
+	4. bootstrap element in public-api.ts in library
+		// Bootstrap the primary module
+		platformBrowserDynamic()
+		  .bootstrapModule(StockTickerLibModule)
+		  .catch(err => console.error(err));
+	5. add "document-register-element" to package.json for application
+	6. add register element to application polyfills  (doesn't seem to be necessary)
+		import 'document-register-element';
