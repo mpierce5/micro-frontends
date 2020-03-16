@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { StockTickerService } from './stock-ticker.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -9,13 +9,14 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./stock-ticker-lib.component.css']
 })
 export class StockTickerLibComponent implements OnInit {
-  public stockSymbol = 'WMT';
+  @Input() stockSymbol = 'WMT';
   public stockData$: Observable<any>;
+
   constructor(private stockTickerService: StockTickerService) {
-    this.stockData$ = this.stockTickerService.getStockData(this.stockSymbol);
   }
 
   ngOnInit(): void {
+    this.stockData$ = this.stockTickerService.getStockData(this.stockSymbol);
   }
 
 }
