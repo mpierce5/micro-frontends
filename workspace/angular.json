@@ -338,7 +338,10 @@
               "node_modules/@angular/elements/bundles/elements.umd.js",
               "node_modules/@angular/platform-browser/bundles/platform-browser.umd.js",
               "node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js",
-              "dist/training-library/bundles/training-library.umd.js"
+              "dist/training-library/bundles/training-library.umd.js",
+              "./dist/training-element/runtime-es2015.js",
+              "./dist/training-element/polyfills-es2015.js",
+              "./dist/training-element/main-es2015.js"
             ]
           },
           "configurations": {
@@ -469,6 +472,123 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        }
+      }
+    },
+    "training-element": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/training-element",
+      "sourceRoot": "projects/training-element/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/training-element",
+            "index": "projects/training-element/src/index.html",
+            "main": "projects/training-element/src/main.ts",
+            "polyfills": "projects/training-element/src/polyfills.ts",
+            "tsConfig": "projects/training-element/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/training-element/src/favicon.ico",
+              "projects/training-element/src/assets"
+            ],
+            "styles": [
+              "projects/training-element/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/training-element/src/environments/environment.ts",
+                  "with": "projects/training-element/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "training-element:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "training-element:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "training-element:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/training-element/src/test.ts",
+            "polyfills": "projects/training-element/src/polyfills.ts",
+            "tsConfig": "projects/training-element/tsconfig.spec.json",
+            "karmaConfig": "projects/training-element/karma.conf.js",
+            "assets": [
+              "projects/training-element/src/favicon.ico",
+              "projects/training-element/src/assets"
+            ],
+            "styles": [
+              "projects/training-element/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/training-element/tsconfig.app.json",
+              "projects/training-element/tsconfig.spec.json",
+              "projects/training-element/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/training-element/e2e/protractor.conf.js",
+            "devServerTarget": "training-element:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "training-element:serve:production"
+            }
           }
         }
       }
