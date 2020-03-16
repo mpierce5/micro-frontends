@@ -19,6 +19,10 @@
       "stock-ticker-lib": [
         "dist/stock-ticker-lib/stock-ticker-lib",
         "dist/stock-ticker-lib"
+      ],
+      "training-library": [
+        "dist/training-library/training-library",
+        "dist/training-library"
       ]
     }
   },
