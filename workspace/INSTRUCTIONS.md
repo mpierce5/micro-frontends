@@ -1,35 +1,22 @@
-Setup Library Element
-	1. create library (ng generate library {library-name}
-	2. add a component to the library (or use the default)
-	4. add BrowserModule to imports in lib.module.ts
-	3. update lib.module.ts to export as angular element
-		export class TrainingLibraryModule implements DoBootstrap {
+Setup Full Element
+    1. Create a new application for the full element (stock-ticker-element)
+    2. Remove everything except app.module (elements)
+    3. In app module import the element component from the library
+    4. Include all shared dependencies from library in app.module (elements)
+    5. Update app.module to build component as an element
+        export class AppModule {
           constructor(private injector: Injector) {}
-          ngDoBootstrap(appRef: ApplicationRef): void {
-            // Turn our component into an Angular Element (Web Component)
-            const stockTickerLibElement = createCustomElement(TrainingLibraryComponent, {
-              injector: this.injector,
-            });
-            customElements.define(
-              'training-lib',
-              stockTickerLibElement
-            );
+          ngDoBootstrap() {
+            const el = createCustomElement(StockTickerLibComponent,
+              { injector: this.injector });
+            customElements.define('stock-ticker-full', el);
           }
         }
-	4. bootstrap element in public-api.ts in library
-		// Bootstrap the primary module
-        platformBrowserDynamic()
-          .bootstrapModule(TrainingLibraryModule)
-          .catch(err => console.error(err));
-	5. add "document-register-element" to package.json for application (this should already be done from previous projects)
-	6. add register element to application polyfills  (doesn't seem to be necessary)
-		import 'document-register-element';
-
-
-Setup Application to consume custom element
-	1. build the library (ng build {library-name} (use --watch to be able to see live updates)
-	2. add reference to build bundle to scripts in angular.json (dist/{library-name}/bundles/{library-name}.umd.js)
-	3. add the custom element tag defined in training/library/src/lib/training-library.module.ts to index.html in training-app application (or any page)
-	4. ng serve your app
-
-** This is the library element, meaning if you look at the size it is about 4k!! and getting all of its dependencies from training-app **
+    6. In angular.json add build file dependencies for full element
+              "./dist/stock-ticker-element/runtime.js",
+              "./dist/stock-ticker-element/polyfills.js",
+              "./dist/stock-ticker-element/main.js"
+    7. Add reference to custom element tag ('stock-ticker-full') to main application index.html (stock-ticker-app)
+    8. Build/watch element repository
+    9. Serve main application (stock-ticker-app)
+        * new element should display and be identical to library element except for the custom element name (stock-ticker-full)
