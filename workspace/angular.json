@@ -297,6 +297,140 @@
           }
         }
       }
+    },
+    "training-app": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/training-app",
+      "sourceRoot": "projects/training-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "outputPath": "dist/training-app",
+            "index": "projects/training-app/src/index.html",
+            "main": "projects/training-app/src/main.ts",
+            "polyfills": "projects/training-app/src/polyfills.ts",
+            "tsConfig": "projects/training-app/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/training-app/src/favicon.ico",
+              "projects/training-app/src/assets"
+            ],
+            "styles": [
+              "projects/training-app/src/styles.css"
+            ],
+            "scripts": [
+              {
+                "bundleName": "polyfill-webcomp-es5",
+                "input": "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"
+              },
+              {
+                "bundleName": "polyfill-webcomp",
+                "input": "node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce-pf.js"
+              },
+              "node_modules/rxjs/bundles/rxjs.umd.js",
+              "node_modules/@angular/core/bundles/core.umd.js",
+              "node_modules/@angular/common/bundles/common.umd.js",
+              "node_modules/@angular/common/bundles/common-http.umd.js",
+              "node_modules/@angular/compiler/bundles/compiler.umd.js",
+              "node_modules/@angular/elements/bundles/elements.umd.js",
+              "node_modules/@angular/platform-browser/bundles/platform-browser.umd.js",
+              "node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/training-app/src/environments/environment.ts",
+                  "with": "projects/training-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "browserTarget": "training-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "training-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "training-app:build"
+          }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "main": "projects/training-app/src/test.ts",
+            "polyfills": "projects/training-app/src/polyfills.ts",
+            "tsConfig": "projects/training-app/tsconfig.spec.json",
+            "karmaConfig": "projects/training-app/karma.conf.js",
+            "assets": [
+              "projects/training-app/src/favicon.ico",
+              "projects/training-app/src/assets"
+            ],
+            "styles": [
+              "projects/training-app/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/training-app/tsconfig.app.json",
+              "projects/training-app/tsconfig.spec.json",
+              "projects/training-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/training-app/e2e/protractor.conf.js",
+            "devServerTarget": "training-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "training-app:serve:production"
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "stock-ticker-lib",
