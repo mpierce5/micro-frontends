@@ -10,9 +10,6 @@
     "e2e": "ng e2e",
     "postinstall:bak": "ngcc",
     "postinstall": "ngcc",
-    "build:stock-ticker-app:externals": "ng build --extra-webpack-config projects/stock-ticker-app/webpack.externals.js --prod --project stock-ticker-app --single-bundle",
-    "build:stock-ticker-element": "ng build stock-ticker-element --prod && node build-elements.js",
-    "serve-all": "concurrently \"wait-on dist/stock-ticker-element/main.js && wait-on dist/stock-ticker-lib/bundles/stock-ticker-lib.umd.js && ng serve stock-ticker-app -o\" \"ng build stock-ticker-lib --prod --watch\" \"ng build stock-ticker-element --prod --watch\"",
     "build:training-app:externals": "ng build --extra-webpack-config projects/training-app/webpack.externals.js --prod --project training-app --single-bundle"
   },
   "private": true,

@@ -12,12 +12,12 @@ export class TrainingLibraryModule implements DoBootstrap {
   constructor(private injector: Injector) {}
   ngDoBootstrap(appRef: ApplicationRef): void {
     // Turn our component into an Angular Element (Web Component)
-    const stockTickerLibElement = createCustomElement(TrainingLibraryComponent, {
+    const libraryElement = createCustomElement(TrainingLibraryComponent, {
       injector: this.injector,
     });
     customElements.define(
       'training-lib',
-      stockTickerLibElement
+      libraryElement
     );
   }
 }
