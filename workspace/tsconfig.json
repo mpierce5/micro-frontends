@@ -14,13 +14,7 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "stock-ticker-lib": [
-        "dist/stock-ticker-lib/stock-ticker-lib",
-        "dist/stock-ticker-lib"
-      ]
-    }
+    ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
