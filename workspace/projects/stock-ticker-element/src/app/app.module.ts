@@ -4,13 +4,14 @@ import { Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { StockTickerLibComponent } from '../../../stock-ticker-lib/src/lib/stock-ticker-lib/stock-ticker-lib.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
     StockTickerLibComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule, HttpClientModule, MatSliderModule
   ],
   providers: [],
   exports: [

@@ -4,10 +4,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {createCustomElement} from '@angular/elements';
 import { StockTickerService } from './stock-ticker-lib/stock-ticker.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [StockTickerLibComponent],
-  imports: [BrowserModule,  HttpClientModule],
+  imports: [BrowserModule,  HttpClientModule, MatSliderModule],
   providers: [StockTickerService],
   exports: []
 })
