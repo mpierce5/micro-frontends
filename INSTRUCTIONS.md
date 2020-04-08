@@ -8,7 +8,19 @@
  
     Note: you can use the default component created with the library
     
- 3. Update _lib.module.ts_ to export as angular element
+ 3. Note: all shared dependencies in Update _lib.module.ts_ must be included as well ex: BrowserModule
+    
+        @NgModule({
+          declarations: [
+            LibraryComponent
+          ],
+          imports: [
+            BrowserModule
+          ],
+          providers: []
+        })
+    
+ 4. Update _lib.module.ts_ to export as angular element
  
         export class LibraryModule implements DoBootstrap {
            constructor(private injector: Injector) {}
@@ -24,7 +36,7 @@
            }
          }
 
- 4. Bootstrap element in _public-api.ts_ in {library-name}
+ 5. Bootstrap element in _public-api.ts_ in {library-name}
  
         // Bootstrap the primary module
         platformBrowserDynamic()

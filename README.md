@@ -70,8 +70,20 @@ being provided for it. The size however is much larger as it includes core angul
  2. Add a component to {library-name}: 
  
     Note: you can use the default component created with the library
+ 
+ 3. Note: all shared dependencies in Update _lib.module.ts_ must be included as well ex: BrowserModule
     
- 3. Update _lib.module.ts_ to export as angular element
+        @NgModule({
+          declarations: [
+            LibraryComponent
+          ],
+          imports: [
+            BrowserModule
+          ],
+          providers: []
+        })
+    
+ 4. Update _lib.module.ts_ to export as angular element
  
         export class LibraryModule implements DoBootstrap {
            constructor(private injector: Injector) {}
@@ -87,7 +99,7 @@ being provided for it. The size however is much larger as it includes core angul
            }
          }
 
- 4. Bootstrap element in _public-api.ts_ in {library-name}
+ 5. Bootstrap element in _public-api.ts_ in {library-name}
  
         // Bootstrap the primary module
         platformBrowserDynamic()
